@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"dev.majek.chattools","l":"MiniMessageWrapper.Builder"},{"p":"dev.majek.chattools","l":"Pagination.InvalidPageException"},{"p":"dev.majek.chattools","l":"MiniMessageWrapper"},{"p":"dev.majek.chattools","l":"Pagination"},{"p":"dev.majek.chattools","l":"TextComponentCutter"}]
