@@ -216,19 +216,43 @@ public class MiniMessageWrapperTest {
         Component.text("Alice Blue").color(TextColor.color(0xf0f8ff)),
         MiniMessageWrapper.standard().mmParse(oneColor)
     );
+    final String multipleColors = "<aliceblue>Blue</aliceblue> White <orange>Orange";
+    Assert.assertEquals(
+        Component.empty()
+            .append(Component.text("Blue").color(TextColor.color(0xf0f8ff)))
+            .append(Component.text(" White "))
+            .append(Component.text("Orange").color(TextColor.color(0xffa500))),
+        MiniMessageWrapper.standard().mmParse(multipleColors)
+    );
+    final String multipleColorsAsArgs = "<css:aliceblue>Blue</css:aliceblue> White <css:orange>Orange";
+    Assert.assertEquals(
+        Component.empty()
+            .append(Component.text("Blue").color(TextColor.color(0xf0f8ff)))
+            .append(Component.text(" White "))
+            .append(Component.text("Orange").color(TextColor.color(0xffa500))),
+        MiniMessageWrapper.standard().mmParse(multipleColorsAsArgs)
+    );
   }
 
   @Test
   public void cssColorsMinecraft() {
     final String minecraft = "<aqua>Minecraft";
     Assert.assertEquals(
-        Component.text("Minecraft").color(TextColor.color(0x55ffff)),
+        Component.text("Minecraft").color(NamedTextColor.AQUA),
         MiniMessageWrapper.standard().mmParse(minecraft)
     );
     final String css = "<css:aqua>CSS";
     Assert.assertEquals(
         Component.text("CSS").color(TextColor.color(0x00ffff)),
         MiniMessageWrapper.standard().mmParse(css)
+    );
+    final String both = "<aqua>MC Aqua</aqua> White <css:aqua>CSS Aqua</css:aqua>";
+    Assert.assertEquals(
+        Component.empty()
+            .append(Component.text("MC Aqua").color(TextColor.color(0x55ffff)))
+            .append(Component.text(" White "))
+            .append(Component.text("CSS Aqua").color(TextColor.color(0x00ffff))),
+        MiniMessageWrapper.legacy().mmParse(both)
     );
   }
 }
