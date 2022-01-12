@@ -25,6 +25,7 @@ package dev.majek.chattools;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.placeholder.Placeholder;
 import net.kyori.adventure.text.minimessage.placeholder.PlaceholderResolver;
@@ -205,6 +206,29 @@ public class MiniMessageWrapperTest {
     Assert.assertEquals(
         Component.text("<hover:show_text:hover text>Hover here!</hover>"),
         MiniMessageWrapper.builder().advancedTransformations(false).build().mmParse(string)
+    );
+  }
+
+  @Test
+  public void cssColorsNonMinecraft() {
+    final String oneColor = "<aliceblue>Alice Blue";
+    Assert.assertEquals(
+        Component.text("Alice Blue").color(TextColor.color(0xf0f8ff)),
+        MiniMessageWrapper.standard().mmParse(oneColor)
+    );
+  }
+
+  @Test
+  public void cssColorsMinecraft() {
+    final String minecraft = "<aqua>Minecraft";
+    Assert.assertEquals(
+        Component.text("Minecraft").color(TextColor.color(0x55ffff)),
+        MiniMessageWrapper.standard().mmParse(minecraft)
+    );
+    final String css = "<css:aqua>CSS";
+    Assert.assertEquals(
+        Component.text("CSS").color(TextColor.color(0x00ffff)),
+        MiniMessageWrapper.standard().mmParse(css)
     );
   }
 }

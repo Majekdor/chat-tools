@@ -59,18 +59,23 @@ final class MiniMessageWrapperImpl implements MiniMessageWrapper {
       true, true, false, true,
       PlaceholderResolver.empty(), new HashSet<>(), new HashSet<>(), 0);
 
+  private final TransformationType<?> CSS_COLOR = TransformationType.transformationType(
+      CSSColorTransformation::canParse,
+      CSSColorTransformation::create
+  );
+
   @SuppressWarnings("all")
   private final TransformationRegistry allTransformations = TransformationRegistry.builder().clear().add(
       TransformationType.CLICK_EVENT, TransformationType.COLOR, TransformationType.DECORATION,
       TransformationType.FONT, TransformationType.GRADIENT, TransformationType.HOVER_EVENT,
       TransformationType.INSERTION, TransformationType.KEYBIND, TransformationType.RAINBOW,
-      TransformationType.TRANSLATABLE
+      TransformationType.TRANSLATABLE, CSS_COLOR
   ).build();
 
   @SuppressWarnings("all")
   private final TransformationRegistry colorTransformations = TransformationRegistry.builder().clear().add(
       TransformationType.COLOR, TransformationType.DECORATION,
-      TransformationType.GRADIENT, TransformationType.RAINBOW
+      TransformationType.GRADIENT, TransformationType.RAINBOW, CSS_COLOR
   ).build();
 
   private final boolean gradients, hexColors, standardColors, legacyColors, advancedTransformations, blockCloseHex;
@@ -109,6 +114,7 @@ final class MiniMessageWrapperImpl implements MiniMessageWrapper {
 
   @Override
   public @NotNull String mmString(@NotNull String mmString) {
+
     for (NamedTextColor color : this.removedColors) {
       mmString = mmString.replace("<" + color.toString().toLowerCase(Locale.ROOT) + ">", "");
       mmString = mmString.replace("</" + color.toString().toLowerCase(Locale.ROOT) + ">", "");
